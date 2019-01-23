@@ -13,7 +13,8 @@ class App extends Component {
         currView: 'guide',
         menus: [],
         showMenuList: ['guide'],
-        guideMap: {}
+        guideMap: {},
+        isFirstGuide: false
     }
 
     componentDidMount() {
@@ -25,9 +26,9 @@ class App extends Component {
         });
     }
     renderRight() {
-        const {currView,currGuide,guideMap} = this.state
-        if(currView === 'onLineList') {return <OnLineList></OnLineList>}
-        if(currView === 'guide') {return <Guide content={guideMap[currGuide]}></Guide>}
+        const { currView, currGuide, guideMap,isFirstGuide } = this.state
+        if (currView === 'onLineList') { return <OnLineList></OnLineList> }
+        if (currView === 'guide') { return <Guide content={guideMap[currGuide]} isFirstGuide={isFirstGuide}></Guide> }
     }
     _showView(show) {
         show = JSON.parse(show)
@@ -41,12 +42,12 @@ class App extends Component {
             currView
         })
     }
-    _getGuideMenu(arr) {
+    _getGuideMenu(isFirst,arr) {
         console.log(arr)
         const menus = []
         const guideMap = {}
         arr = JSON.parse(arr)
-        
+        isFirst = JSON.parse(isFirst)
         arr.forEach(v => {
             menus.push(v.type)
             guideMap[v.type] = v
@@ -54,19 +55,20 @@ class App extends Component {
         this.setState({
             menus,
             guideMap,
-            currGuide: menus[0]
+            currGuide: menus[0],
+            isFirstGuide: isFirst
         })
     }
-    handleMenuClick({item,key}) {
-        const {currView} = this.state
-        if(currView === 'guide') {
+    handleMenuClick({ item, key }) {
+        const { currView } = this.state
+        if (currView === 'guide') {
             this.setState({
                 currGuide: item.props.label
             })
         }
     }
     renderLeft() {
-        const { collapsed,menus } = this.state
+        const { collapsed, menus } = this.state
         const showLeft = this.isShowLeft
         return showLeft ?
             <div style={{ width: collapsed ? 80 : 256 }}>
@@ -91,16 +93,16 @@ class App extends Component {
             : null
     }
     isShowLeft() {
-        const { currView, showMenuList,show } = this.state
+        const { currView, showMenuList, show } = this.state
         return show && showMenuList.includes(currView)
     }
     render() {
-        const {  collapsed, show } = this.state
+        const { collapsed, show } = this.state
         const showLeft = this.isShowLeft()
         return (
             show ?
                 <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
-                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: '80vh', width: '80vw',background: 'white' }}>
+                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: '80vh', width: '80vw', background: 'white' }}>
 
                         {this.renderLeft()}
 
@@ -109,7 +111,7 @@ class App extends Component {
                                 showLeft ? <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
                                     <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
                                 </Button> : null
-                            }             
+                            }
                             {this.renderRight()}
                         </div>
 
