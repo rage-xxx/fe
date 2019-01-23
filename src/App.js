@@ -37,7 +37,8 @@ class App extends Component {
         })
     }
     _setCurrView(currView) {
-        currView = JSON.parse(currView)
+        // currView = JSON.parse(currView)
+        console.log(currView)
         this.setState({
             currView
         })
