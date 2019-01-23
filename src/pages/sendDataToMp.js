@@ -1,0 +1,1 @@
+// mp.events.add("REACTHandler", REACTHandler);
