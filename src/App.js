@@ -42,9 +42,11 @@ class App extends Component {
         })
     }
     _getGuideMenu(arr) {
+        console.log(arr)
         const menus = []
         const guideMap = {}
         arr = JSON.parse(arr)
+        
         arr.forEach(v => {
             menus.push(v.type)
             guideMap[v.type] = v
@@ -110,7 +112,7 @@ class App extends Component {
                             }             
                             {this.renderRight()}
                         </div>
-                        
+
                     </div>
                 </div>
                 : null
