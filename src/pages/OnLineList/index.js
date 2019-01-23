@@ -32,7 +32,6 @@ export default class OnLineList extends Component {
         return (
             <div>
                 <Table dataSource={dataSource} columns={columns} pagination={false} />
-                <Button onClick={this.handleTest.bind(this)}>测试1</Button>
             </div>
         )
     }
