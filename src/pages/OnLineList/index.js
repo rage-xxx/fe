@@ -13,7 +13,7 @@ export default class OnLineList extends Component {
     componentDidMount() {
         window._react.onLineList = this
     }
-    getTableData = (data) => {
+    _getTableData = (data) => {
         // data格式如下：
         // const data = [
         //     {id: 'xxx',player: 'player1',level: 100,ping: 60},

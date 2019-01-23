@@ -8,7 +8,7 @@ const SubMenu = Menu.SubMenu;
 
 class App extends Component {
     state = {
-        show: true,
+        show: false,
         collapsed: false,
         currView: 'guide',
         menus: [],
@@ -29,19 +29,22 @@ class App extends Component {
         if(currView === 'onLineList') {return <OnLineList></OnLineList>}
         if(currView === 'guide') {return <Guide content={guideMap[currGuide]}></Guide>}
     }
-    showView(show) {
+    _showView(show) {
+        show = JSON.parse(show)
         this.setState({
             show
         })
     }
-    setCurrView(currView) {
+    _setCurrView(currView) {
+        currView = JSON.parse(currView)
         this.setState({
             currView
         })
     }
-    getGuideMenu(arr) {
+    _getGuideMenu(arr) {
         const menus = []
         const guideMap = {}
+        arr = JSON.parse(arr)
         arr.forEach(v => {
             menus.push(v.type)
             guideMap[v.type] = v
@@ -61,8 +64,8 @@ class App extends Component {
         }
     }
     renderLeft() {
-        const { collapsed, currView, showMenuList,menus } = this.state
-        const showLeft = showMenuList.includes(currView)
+        const { collapsed,menus } = this.state
+        const showLeft = this.isShowLeft
         return showLeft ?
             <div style={{ width: collapsed ? 80 : 256 }}>
                 <Menu
@@ -85,25 +88,29 @@ class App extends Component {
             </div>
             : null
     }
+    isShowLeft() {
+        const { currView, showMenuList,show } = this.state
+        return show && showMenuList.includes(currView)
+    }
     render() {
-        const { menus, collapsed, show, currView, showMenuList } = this.state
-        const showLeft = showMenuList.includes(currView)
+        const {  collapsed, show } = this.state
+        const showLeft = this.isShowLeft()
         return (
             show ?
                 <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
-                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: 600, width: 1200 }}>
+                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: '80vh', width: '80vw',background: 'white' }}>
 
                         {this.renderLeft()}
+
                         <div className="right" style={{ padding: 15, flex: 1 }}>
                             {
                                 showLeft ? <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
-                                    <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+                                    <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
                                 </Button> : null
-                            }
-
-                            
+                            }             
                             {this.renderRight()}
                         </div>
+                        
                     </div>
                 </div>
                 : null
