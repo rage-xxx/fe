@@ -3,18 +3,19 @@ import './App.css';
 import { Menu, Icon, Button } from 'antd';
 import OnLineList from './pages/OnLineList/'
 import Guide from './pages/Guide/'
+import Bank from './pages/Bank/'
 
-const SubMenu = Menu.SubMenu;
+
 
 class App extends Component {
     state = {
-        show: false,
+        show: true,
         collapsed: false,
-        currView: 'guide',
+        currView: 'bank',
         menus: [],
-        showMenuList: ['guide'],
-        guideMap: {},
-        isFirstGuide: false
+        hideMenuList: ['onLineList'],
+        isFirstGuide: false,
+        currMenu: ''
     }
 
     componentDidMount() {
@@ -26,9 +27,23 @@ class App extends Component {
         });
     }
     renderRight() {
-        const { currView, currGuide, guideMap,isFirstGuide } = this.state
-        if (currView === 'onLineList') { return <OnLineList></OnLineList> }
-        if (currView === 'guide') { return <Guide content={guideMap[currGuide]} isFirstGuide={isFirstGuide}></Guide> }
+        const { currView, currMenu,isFirstGuide } = this.state
+        const map = {
+            onLineList: <OnLineList></OnLineList>,
+            guide: <Guide currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus} isFirstGuide={isFirstGuide} ></Guide>,
+            bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>
+        }
+        return map[currView]
+    }
+    setMenus = (menus) => {
+        this.setState({
+            menus
+        })
+    }
+    setCurrMenu = (currMenu) => {
+        this.setState({
+            currMenu
+        })
     }
     _showView(show) {
         show = JSON.parse(show)
@@ -43,34 +58,15 @@ class App extends Component {
             currView
         })
     }
-    _getGuideMenu(isFirst,arr) {
-        console.log(arr)
-        const menus = []
-        const guideMap = {}
-        arr = JSON.parse(arr)
-        isFirst = JSON.parse(isFirst)
-        arr.forEach(v => {
-            menus.push(v.type)
-            guideMap[v.type] = v
-        })
-        this.setState({
-            menus,
-            guideMap,
-            currGuide: menus[0],
-            isFirstGuide: isFirst
-        })
-    }
+
     handleMenuClick({ item, key }) {
-        const { currView } = this.state
-        if (currView === 'guide') {
-            this.setState({
-                currGuide: item.props.label
-            })
-        }
+        this.setState({
+            currMenu: item.props.label
+        }) 
     }
     renderLeft() {
         const { collapsed, menus } = this.state
-        const showLeft = this.isShowLeft
+        const showLeft = this.isShowLeft()
         return showLeft ?
             <div style={{ width: collapsed ? 80 : 256 }}>
                 <Menu
@@ -94,8 +90,8 @@ class App extends Component {
             : null
     }
     isShowLeft() {
-        const { currView, showMenuList, show } = this.state
-        return show && showMenuList.includes(currView)
+        const { currView, hideMenuList, show } = this.state
+        return show && !hideMenuList.includes(currView)
     }
     render() {
         const { collapsed, show } = this.state
