@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button } from 'antd'
+import { Input, Button, Table } from 'antd'
 
 export default class OnLineList extends Component {
     state = {
@@ -7,24 +7,32 @@ export default class OnLineList extends Component {
         fetchMoney: '',
         transName: '',
         transMoney: '',
-        overage: 0
+        overage: 0,
+        record: []
     }
     componentDidMount() {
         window._react.bank = this
-        const menus = ['存款', '取款', '转账','交易记录']
+        const menus = ['存款', '取款', '转账', '交易记录']
         this.props.setMenus(menus)
         this.props.setCurrMenu(menus[0])
+    }
+    componentDidUpdate(nextProps) {
+        if (nextProps.currMenu === '交易记录') {
+            window.mp.trigger('DataFromClient', {
+                action: 'loadPlayerBankBalance',
+                payload: 'loadPlayerBankBalance'
+            })
+        }
     }
     _getOverage = (overage) => {
         this.setState({
             overage: overage
         })
     }
-    handleSave = () => {
-        window.mp.trigger("DataFromClient", {
-            action: 'executeBankOperation',
-            payload: [this.state.saveMoney]
-        });
+    _getRecord = (data) => {
+        this.setState({
+            record: JSON.parse(data)
+        })
     }
     handleOper(type) {
         const { fetchMoney, saveMoney, transMoney, transName } = this
@@ -45,7 +53,7 @@ export default class OnLineList extends Component {
     }
     render() {
         const { currMenu } = this.props
-        const { saveMoney,overage, fetchMoney, transMoney, transName } = this.state
+        const { saveMoney, overage, fetchMoney, transMoney, transName } = this.state
         const rightMap = {
             '存款': (
                 <div>
@@ -65,15 +73,23 @@ export default class OnLineList extends Component {
                     转账金额<Input value={transMoney} onChange={(e) => this.setState({ transMoney: e.target.value })}></Input>
                     <Button onClick={this.handleOper.bind(this, 3)}>转账</Button>
                 </div>
+            ),
+            '交易记录': (
+                <Table></Table>
             )
         }
         return (
-            <div style={{ display: 'flex', width: '100%' }}>
-                {
-                    rightMap[currMenu]
-                }
-                {overage}
+            <div>
+                <div style={{ display: 'flex', width: '100%' }}>
+                    {
+                        rightMap[currMenu]
+                    }
+                </div>
+                <div>
+                    余额：  {overage}
+                </div>
             </div>
+
         )
     }
 }
