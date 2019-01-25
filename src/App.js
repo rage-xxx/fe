@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Menu, Icon, Button } from 'antd';
+import { Menu, Icon, Button,message } from 'antd';
 import OnLineList from './pages/OnLineList/'
 import Guide from './pages/Guide/'
 import Bank from './pages/Bank/'
@@ -58,7 +58,9 @@ class App extends Component {
             currView
         })
     }
-
+    _msg(type,text) {
+        message[type](text)
+    }
     handleMenuClick({ item, key }) {
         this.setState({
             currMenu: item.props.label
@@ -104,11 +106,14 @@ class App extends Component {
                         {this.renderLeft()}
 
                         <div className="right" style={{ padding: 15, flex: 1 }}>
-                            {
-                                showLeft ? <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
-                                    <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
-                                </Button> : null
-                            }
+                            <div style={{position: 'relative'}}>
+                                {
+                                    showLeft ? <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+                                        <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
+                                    </Button> : null
+                                }
+                                <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={() => this.setState({show: false})} />
+                            </div>
                             {this.renderRight()}
                         </div>
 

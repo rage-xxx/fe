@@ -6,13 +6,19 @@ export default class OnLineList extends Component {
         saveMoney: '',
         fetchMoney: '',
         transName: '',
-        transMoney: ''
+        transMoney: '',
+        overage: 0
     }
     componentDidMount() {
         window._react.bank = this
         const menus = ['存款', '取款', '转账','交易记录']
         this.props.setMenus(menus)
         this.props.setCurrMenu(menus[0])
+    }
+    _getOverage = (overage) => {
+        this.setState({
+            overage: overage
+        })
     }
     handleSave = () => {
         window.mp.trigger("DataFromClient", {
@@ -39,7 +45,7 @@ export default class OnLineList extends Component {
     }
     render() {
         const { currMenu } = this.props
-        const { saveMoney, fetchMoney, transMoney, transName } = this.state
+        const { saveMoney,overage, fetchMoney, transMoney, transName } = this.state
         const rightMap = {
             '存款': (
                 <div>
@@ -66,6 +72,7 @@ export default class OnLineList extends Component {
                 {
                     rightMap[currMenu]
                 }
+                {overage}
             </div>
         )
     }
