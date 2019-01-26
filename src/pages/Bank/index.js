@@ -48,10 +48,10 @@ export default class OnLineList extends Component {
         if (type === 3) {
             payload = [3, transMoney, transName]
         }
-        window.mp.trigger("DataFromClient", {
+        window.mp.trigger("DataFromClient", JSON.stringify({
             action: 'executeBankOperation',
             payload
-        });
+        }));
     }
     render() {
         const { currMenu } = this.props
