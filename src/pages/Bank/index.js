@@ -27,15 +27,13 @@ export default class OnLineList extends Component {
         })
     }
     _getRecord = (data) => {
-        console.log(data)
         const record = JSON.parse(data)
-        console.log(record)
-        // const record = data
+        // const record = [{"amount":123,"time":"2019/1/18 23:44:12","oname":"存款 收款方:cyuancai"},{"amount":5000,"time":"2019/1/12 16:00:44","oname":"存款 收款方:cyuancai"},{"amount":500,"time":"2018/12/28 23:41:04","oname":"存款 收款方:cyuancai"},{"amount":500,"time":"2018/12/27 00:56:10","oname":"存款 收款方:cyuancai"},{"amount":500,"time":"2018/12/27 00:53:47","oname":"存款 收款方:cyuancai"},{"amount":500,"time":"2018/12/27 00:52:16","oname":"存款 收款方:cyuancai"},{"amount":5000,"time":"2018/12/27 00:50:04","oname":"存款 收款方:cyuancai"},{"amount":50000,"time":"2018/12/27 00:47:16","oname":"存款 收款方:cyuancai"},{"amount":5000,"time":"2018/12/27 00:45:44","oname":"存款 收款方:cyuancai"},{"amount":5000,"time":"2018/12/27 00:39:55","oname":"存款 收款方:cyuancai"},{"amount":100000,"time":"2018/11/18 16:32:38","oname":"取款 收款方:cyuancai"},{"amount":1000,"time":"2018/11/18 00:31:09","oname":"取款 收款方:cyuancai"},{"amount":3067037,"time":"2018/11/11 15:08:20","oname":"存款 收款方:ATM"},{"amount":1000,"time":"2018/11/11 15:08:13","oname":"取款 收款方:cyuancai"},{"amount":9990000,"time":"2018/10/13 15:07:53","oname":"取款 收款方:cyuancai"},{"amount":9018681,"time":"2018/10/13 15:06:53","oname":"存款 收款方:ATM"}]
         record.forEach((v,idx) => {
             v.key = idx
         })
         this.setState({
-            record: data,
+            record,
         })
     }
     handleOper(type) {
@@ -58,6 +56,7 @@ export default class OnLineList extends Component {
     render() {
         const { currMenu } = this.props
         const { saveMoney, overage, fetchMoney, transMoney, transName ,record,columns} = this.state
+        console.log(record,'rec')
         const rightMap = {
             '存款': (
                 <div>
@@ -79,7 +78,7 @@ export default class OnLineList extends Component {
                 </div>
             ),
             '交易记录': (
-                <Table dataSource={record} columns={columns}  pagination={false}></Table>
+                <Table dataSource={record} columns={columns}  pagination={false} scroll={{ y: '60vh' }}></Table>
             )
         }
         return (

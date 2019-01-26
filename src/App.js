@@ -64,15 +64,17 @@ class App extends Component {
     }
     handleMenuClick({ item, key }) {
         const currMenu = item.props.label
-        if(this.state.currView === 'bank' && currMenu === '交易记录') {
-            if(!window.mp) {return}
-            window.mp.trigger('DataFromClient', JSON.stringify({
-                action: 'loadPlayerBankBalance',
-                payload: 'loadPlayerBankBalance'
-            }))
-        }
+
         this.setState({
             currMenu
+        },() => {
+            if(this.state.currView === 'bank' && currMenu === '交易记录') {
+                if(!window.mp) {return}
+                window.mp.trigger('DataFromClient', JSON.stringify({
+                    action: 'loadPlayerBankBalance',
+                    payload: 'loadPlayerBankBalance'
+                }))
+            }
         }) 
     }
     renderLeft() {
@@ -102,7 +104,6 @@ class App extends Component {
     }
     handleClose = () => {
         this.setState({show: false},() => {
-            alert(this.state.currView)
             if(!window.mp) {return}
             window.mp.trigger("DataFromClient", JSON.stringify({
                 action: 'activeClosure',
