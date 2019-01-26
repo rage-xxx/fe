@@ -19,8 +19,12 @@ export default class OnLineList extends Component {
         //     {id: 'xxx',player: 'player1',level: 100,ping: 60},
         // ]
         console.log(data)
+        const record = JSON.parse(data)
+        record.forEach((v,idx) => {
+            v.key = idx
+        })
         this.setState({
-            dataSource: typeof data === 'string' ? JSON.parse(data) : data
+            dataSource: record
         })
     }
     handleTest() {

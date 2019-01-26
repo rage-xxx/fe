@@ -8,7 +8,12 @@ export default class OnLineList extends Component {
         transName: '',
         transMoney: '',
         overage: 0,
-        record: []
+        record: [],
+        columns: [
+            {title: '金额',dataIndex: 'amount',key: 'amount'},
+            {title: '时间',dataIndex: 'time',key: 'time'},
+            {title: '详情',dataIndex: 'oname',key: 'oname'},
+        ]
     }
     componentDidMount() {
         window._react.bank = this
@@ -17,7 +22,7 @@ export default class OnLineList extends Component {
         this.props.setCurrMenu(menus[0])
     }
     componentDidUpdate(nextProps) {
-        if (nextProps.currMenu === '交易记录') {
+        if (nextProps.currMenu !== this.props.currMenu && nextProps.currMenu === '交易记录') {
             window.mp.trigger('DataFromClient', {
                 action: 'loadPlayerBankBalance',
                 payload: 'loadPlayerBankBalance'
@@ -30,12 +35,17 @@ export default class OnLineList extends Component {
         })
     }
     _getRecord = (data) => {
+        // const record = JSON.parse(data)
+        const record = data
+        record.forEach((v,idx) => {
+            v.key = idx
+        })
         this.setState({
-            record: JSON.parse(data)
+            record: data,
         })
     }
     handleOper(type) {
-        const { fetchMoney, saveMoney, transMoney, transName } = this
+        const { fetchMoney, saveMoney, transMoney, transName } = this.state
         let payload = []
         if (type === 1) {
             payload = [1, saveMoney]
@@ -53,7 +63,7 @@ export default class OnLineList extends Component {
     }
     render() {
         const { currMenu } = this.props
-        const { saveMoney, overage, fetchMoney, transMoney, transName } = this.state
+        const { saveMoney, overage, fetchMoney, transMoney, transName ,record,columns} = this.state
         const rightMap = {
             '存款': (
                 <div>
@@ -75,12 +85,12 @@ export default class OnLineList extends Component {
                 </div>
             ),
             '交易记录': (
-                <Table></Table>
+                <Table dataSource={record} columns={columns} width="50%"></Table>
             )
         }
         return (
             <div>
-                <div style={{ display: 'flex', width: '100%' }}>
+                <div style={{  width: '100%' }}>
                     {
                         rightMap[currMenu]
                     }
