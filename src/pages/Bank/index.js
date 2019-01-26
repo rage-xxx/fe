@@ -21,14 +21,6 @@ export default class OnLineList extends Component {
         this.props.setMenus(menus)
         this.props.setCurrMenu(menus[0])
     }
-    componentDidUpdate(nextProps) {
-        if (nextProps.currMenu !== this.props.currMenu && nextProps.currMenu === '交易记录') {
-            window.mp.trigger('DataFromClient', {
-                action: 'loadPlayerBankBalance',
-                payload: 'loadPlayerBankBalance'
-            })
-        }
-    }
     _getOverage = (overage) => {
         this.setState({
             overage: overage

@@ -63,8 +63,16 @@ class App extends Component {
         message[type](text)
     }
     handleMenuClick({ item, key }) {
+        const currMenu = item.props.label
+        if(this.state.currView === 'bank' && currMenu === '交易记录') {
+            if(!window.mp) {return}
+            window.mp.trigger('DataFromClient', {
+                action: 'loadPlayerBankBalance',
+                payload: 'loadPlayerBankBalance'
+            })
+        }
         this.setState({
-            currMenu: item.props.label
+            currMenu
         }) 
     }
     renderLeft() {
@@ -97,7 +105,7 @@ class App extends Component {
             if(!window.mp) {return}
             window.mp.trigger("DataFromClient", {
                 action: 'activeClosure',
-                payload: this.currView
+                payload: this.state.currView
             });
         })
     }
