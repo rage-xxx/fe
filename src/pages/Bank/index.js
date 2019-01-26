@@ -77,7 +77,7 @@ export default class OnLineList extends Component {
                 </div>
             ),
             '交易记录': (
-                <Table dataSource={record} columns={columns} width="50%"></Table>
+                <Table dataSource={record} columns={columns}  pagination={false}></Table>
             )
         }
         return (
