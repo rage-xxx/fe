@@ -27,7 +27,9 @@ export default class OnLineList extends Component {
         })
     }
     _getRecord = (data) => {
+        console.log(data)
         const record = JSON.parse(data)
+        console.log(record)
         // const record = data
         record.forEach((v,idx) => {
             v.key = idx
