@@ -59,6 +59,7 @@ class App extends Component {
         })
     }
     _msg(type,text) {
+        console.log(type,text)
         message[type](text)
     }
     handleMenuClick({ item, key }) {
@@ -91,6 +92,15 @@ class App extends Component {
             </div>
             : null
     }
+    handleClose = () => {
+        this.setState({show: false},() => {
+            if(!window.mp) {return}
+            window.mp.trigger("DataFromClient", {
+                action: 'activeClosure',
+                payload: this.currView
+            });
+        })
+    }
     isShowLeft() {
         const { currView, hideMenuList, show } = this.state
         return show && !hideMenuList.includes(currView)
@@ -112,7 +122,7 @@ class App extends Component {
                                         <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
                                     </Button> : null
                                 }
-                                <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={() => this.setState({show: false})} />
+                                <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={this.handleClose} />
                             </div>
                             {this.renderRight()}
                         </div>
