@@ -4,6 +4,8 @@ import { Menu, Icon, Button,message } from 'antd';
 import OnLineList from './pages/OnLineList/'
 import Guide from './pages/Guide/'
 import Bank from './pages/Bank/'
+import Login from './pages/Login/'
+import Register from './pages/Register/'
 
 
 
@@ -11,9 +13,9 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'bank',
+        currView: 'login',
         menus: [],
-        hideMenuList: ['onLineList'],
+        hideMenuList: ['onLineList','login','register'],
         isFirstGuide: false,
         currMenu: ''
     }
@@ -31,7 +33,9 @@ class App extends Component {
         const map = {
             onLineList: <OnLineList></OnLineList>,
             guide: <Guide currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus} isFirstGuide={isFirstGuide} ></Guide>,
-            bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>
+            bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>,
+            login: <Login></Login>,
+            register: <Register></Register>,
         }
         return map[currView]
     }
