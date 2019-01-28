@@ -17,7 +17,19 @@ export default class OnLineList extends Component {
     }
     componentDidMount() {
         window._react.bank = this
-        const menus = ['存款', '取款', '转账', '交易记录']
+        const menus = [{
+            label: '存款',
+            icon: 'rise'
+        }, {
+            label: '取款',
+            icon: 'fall'
+        }, {
+            label: '转账',
+            icon: 'sync'
+        }, {
+            label: '交易记录',
+            icon: 'ordered-list'
+        }]
         this.props.setMenus(menus)
         this.props.setCurrMenu(menus[0])
     }
@@ -56,24 +68,23 @@ export default class OnLineList extends Component {
     render() {
         const { currMenu } = this.props
         const { saveMoney, overage, fetchMoney, transMoney, transName ,record,columns} = this.state
-        console.log(record,'rec')
         const rightMap = {
             '存款': (
                 <div>
-                    存款金额<Input value={saveMoney} onChange={(e) => this.setState({ saveMoney: e.target.value })}></Input>
+                    存款金额<Input value={saveMoney} onChange={(e) => this.setState({ saveMoney: e.target.value })} type="number"></Input>
                     <Button onClick={this.handleOper.bind(this, 1)}>存款</Button>
                 </div>
             ),
             '取款': (
                 <div>
-                    取款金额<Input value={fetchMoney} onChange={(e) => this.setState({ fetchMoney: e.target.value })}></Input>
+                    取款金额<Input value={fetchMoney} onChange={(e) => this.setState({ fetchMoney: e.target.value })} type="number"></Input>
                     <Button onClick={this.handleOper.bind(this, 2)}>取款</Button>
                 </div>
             ),
             '转账': (
                 <div>
-                    转账人<Input value={transName} onChange={(e) => this.setState({ transName: e.target.value })}></Input>
-                    转账金额<Input value={transMoney} onChange={(e) => this.setState({ transMoney: e.target.value })}></Input>
+                    收款人<Input value={transName} onChange={(e) =>  (/^[a-zA-Z]+$/.test(e.target.value) || e.target.value === '') && this.setState({ transName: e.target.value })}></Input>
+                    转账金额<Input value={transMoney} onChange={(e) => this.setState({ transMoney: e.target.value })} type="number"></Input>
                     <Button onClick={this.handleOper.bind(this, 3)}>转账</Button>
                 </div>
             ),

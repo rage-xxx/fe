@@ -20,7 +20,9 @@ export default class OnLineList extends Component {
         arr = JSON.parse(arr)
         isFirst = JSON.parse(isFirst)
         arr.forEach(v => {
-            menus.push(v.type)
+            menus.push({
+                label: v.type
+            })
             guideMap[v.type] = v
         })
         this.setState({

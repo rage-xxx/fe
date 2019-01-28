@@ -59,8 +59,16 @@ class App extends Component {
         })
     }
     _msg(type,text) {
-        console.log(type,text)
-        message[type](text)
+        const arr = text.split('****')
+        message[type](
+            <span>
+                {
+                    arr.map((v,idx) => {
+                        return v.includes('::') ? <strong key={idx} style={{color: v.split('::')[1]}}>{v.split('::')[0]}</strong> : v
+                    })
+                }
+            </span>
+        )
     }
     handleMenuClick({ item, key }) {
         const currMenu = item.props.label
@@ -91,9 +99,10 @@ class App extends Component {
                 >
                     {
                         menus.map((m, idx) => (
-                            <Menu.Item key={idx} label={m}>
+                            <Menu.Item key={idx} label={m.label}>
+                                {m.icon ? <Icon type={m.icon}></Icon> : null}
                                 <span>
-                                    {m}
+                                    {m.label}
                                 </span>
                             </Menu.Item>
                         ))
