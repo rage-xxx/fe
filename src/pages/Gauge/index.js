@@ -18,6 +18,13 @@ export default class OnLineList extends Component {
             this.setOption()
         })
     }
+    _getAllState(speed = 0,gas = 0,healthy = 0) {
+        this.setState({
+            speed: +speed,
+            gas: +gas,
+            healthy: +healthy
+        })
+    }
     _getSpeed(text) {
         this.setState({
             speed: +text

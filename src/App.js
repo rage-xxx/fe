@@ -14,7 +14,7 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'gauge',
+        currView: 'guide',
         menus: [],
         hideMenuList: ['onLineList','login','register','gauge'],
         isFirstGuide: false,
