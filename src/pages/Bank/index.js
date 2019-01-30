@@ -31,7 +31,7 @@ export default class OnLineList extends Component {
             icon: 'ordered-list'
         }]
         this.props.setMenus(menus)
-        this.props.setCurrMenu(menus[0])
+        this.props.setCurrMenu(menus[0].label)
     }
     _getOverage = (overage) => {
         this.setState({

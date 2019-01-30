@@ -6,6 +6,7 @@ import Guide from './pages/Guide/'
 import Bank from './pages/Bank/'
 import Login from './pages/Login/'
 import Register from './pages/Register/'
+import Gauge from './pages/Gauge/'
 
 
 
@@ -13,9 +14,9 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'login',
+        currView: 'gauge',
         menus: [],
-        hideMenuList: ['onLineList','login','register'],
+        hideMenuList: ['onLineList','login','register','gauge'],
         isFirstGuide: false,
         currMenu: ''
     }
@@ -36,6 +37,7 @@ class App extends Component {
             bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>,
             login: <Login></Login>,
             register: <Register></Register>,
+            gauge: <Gauge></Gauge>
         }
         return map[currView]
     }
@@ -129,12 +131,12 @@ class App extends Component {
         return show && !hideMenuList.includes(currView)
     }
     render() {
-        const { collapsed, show } = this.state
+        const { collapsed, show ,currView} = this.state
         const showLeft = this.isShowLeft()
         return (
             show ?
                 <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
-                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: '80vh', width: '80vw', background: 'white' }}>
+                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: '80vh', width: '80vw', background: currView === 'gauge' ? 'transparent' : 'white' }}>
 
                         {this.renderLeft()}
 

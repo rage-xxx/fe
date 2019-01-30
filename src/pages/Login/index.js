@@ -41,7 +41,7 @@ export default class OnLineList extends Component {
                         /> : null
                     }
                 </div>
-                <Input value={password} onChange={(e) => this.setState({ password: e.target.value })}></Input>
+                <Input value={password} onChange={(e) => this.setState({ password: e.target.value })} type="password" onKeyDown={e => e.keyCode === 13 && this.handleClick()}></Input>
                 <Button onClick={this.handleClick}>登录</Button>
             </div>
         )
