@@ -7,6 +7,7 @@ import Bank from './pages/Bank/'
 import Login from './pages/Login/'
 import Register from './pages/Register/'
 import Gauge from './pages/Gauge/'
+import Bag from './pages/Bag/'
 
 
 
@@ -14,9 +15,9 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'guide',
+        currView: 'bag',
         menus: [],
-        hideMenuList: ['onLineList','login','register','gauge'],
+        hideMenuList: ['onLineList','login','register','gauge','bag'],
         isFirstGuide: false,
         currMenu: ''
     }
@@ -37,7 +38,8 @@ class App extends Component {
             bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>,
             login: <Login></Login>,
             register: <Register></Register>,
-            gauge: <Gauge></Gauge>
+            gauge: <Gauge></Gauge>,
+            bag: <Bag></Bag>
         }
         return map[currView]
     }
