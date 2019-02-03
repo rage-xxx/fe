@@ -59,9 +59,10 @@ export default class OnLineList extends Component {
             backgroundColor: bg,
             title: {
                 left: 'center',
-                bottom: '54%',
+                bottom: '25%',
                 textStyle: {
-                    color: '#ffffff'
+                    color: '#ffffff',
+                    fontSize: 14
                 },
                 text: `总里程：${totalMileage}KM`,
             },
@@ -77,14 +78,14 @@ export default class OnLineList extends Component {
                     type: 'gauge',
                     min: 0,
                     max: 320,
-                    splitNumber: 10,
-                    radius: '50%',
+                    splitNumber: 8,
+                    radius: '60%',
                     axisLine: {            // 坐标轴线
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: [[0.09, 'lime'], [0.82, '#1e90ff'], [1, '#ff4500']],
-                            width: 3,
+                            width: 1,
                             shadowColor: '#fff', //默认透明
-                            shadowBlur: 10
+                            shadowBlur: 5
                         }
                     },
                     axisLabel: {            // 坐标轴小标记
@@ -92,7 +93,7 @@ export default class OnLineList extends Component {
                             fontWeight: 'bolder',
                             color: '#fff',
                             shadowColor: '#fff', //默认透明
-                            shadowBlur: 10
+                            shadowBlur: 5
                         }
                     },
                     axisTick: {            // 坐标轴小标记
@@ -104,9 +105,9 @@ export default class OnLineList extends Component {
                         }
                     },
                     splitLine: {           // 分隔线
-                        length: 25,         // 属性length控制线长
+                        length: 20,         // 属性length控制线长
                         lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                            width: 3,
+                            width: 1,
                             color: '#fff',
                             shadowColor: '#fff', //默认透明
                             shadowBlur: 10
@@ -114,12 +115,13 @@ export default class OnLineList extends Component {
                     },
                     pointer: {           // 分隔线
                         shadowColor: '#fff', //默认透明
-                        shadowBlur: 5
+                        shadowBlur: 5,
+                        width: 4
                     },
                     title: {
                         textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                             fontWeight: 'bolder',
-                            fontSize: 20,
+                            fontSize: 14,
                             fontStyle: 'italic',
                             color: '#fff',
                             shadowColor: '#fff', //默认透明
@@ -135,7 +137,8 @@ export default class OnLineList extends Component {
                         offsetCenter: [0, '50%'],       // x, y，单位px
                         textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                             fontWeight: 'bolder',
-                            color: '#fff'
+                            color: '#fff',
+                            fontSize: 14
                         }
                     },
                     data: [{ value: speed, name: 'km/h' }]
@@ -143,16 +146,16 @@ export default class OnLineList extends Component {
                 {
                     name: '损坏程度',
                     type: 'gauge',
-                    center: ['25%', '55%'],    // 默认全局居中
-                    radius: '30%',
+                    center: ['22%', '55%'],    // 默认全局居中
+                    radius: '45%',
                     min: 0,
                     max: 100,
-                    endAngle: 45,
-                    splitNumber: 10,
+                    endAngle: 55,
+                    splitNumber: 5,
                     axisLine: {            // 坐标轴线
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: [[0.29, '#ff4500'], [0.86, '#1e90ff'], [1, 'lime']],
-                            width: 2,
+                            width: 1,
                             shadowColor: '#fff', //默认透明
                             shadowBlur: 10
                         }
@@ -166,7 +169,7 @@ export default class OnLineList extends Component {
                         }
                     },
                     axisTick: {            // 坐标轴小标记
-                        length: 12,        // 属性length控制线长
+                        length: 5,        // 属性length控制线长
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: 'auto',
                             shadowColor: '#fff', //默认透明
@@ -174,9 +177,9 @@ export default class OnLineList extends Component {
                         }
                     },
                     splitLine: {           // 分隔线
-                        length: 20,         // 属性length控制线长
+                        length: 10,         // 属性length控制线长
                         lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                            width: 3,
+                            width: 1,
                             color: '#fff',
                             shadowColor: '#fff', //默认透明
                             shadowBlur: 10
@@ -194,7 +197,8 @@ export default class OnLineList extends Component {
                             fontStyle: 'italic',
                             color: '#fff',
                             shadowColor: '#fff', //默认透明
-                            shadowBlur: 10
+                            shadowBlur: 10,
+                            fontSize: 12
                         }
                     },
                     detail: {
@@ -208,7 +212,8 @@ export default class OnLineList extends Component {
                         offsetCenter: [25, '20%'],       // x, y，单位px
                         textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                             fontWeight: 'bolder',
-                            color: '#fff'
+                            color: '#fff',
+                            fontSize: 12
                         }
                     },
                     data: [{ value: healthy, name: '损坏程度%' }]
@@ -216,8 +221,8 @@ export default class OnLineList extends Component {
                 {
                     name: '油表',
                     type: 'gauge',
-                    center: ['75%', '50%'],    // 默认全局居中
-                    radius: '30%',
+                    center: ['78%', '50%'],    // 默认全局居中
+                    radius: '35%',
                     min: 0,
                     max: 2,
                     startAngle: 135,
@@ -226,13 +231,13 @@ export default class OnLineList extends Component {
                     axisLine: {            // 坐标轴线
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: [[0.2, 'lime'], [0.8, '#1e90ff'], [1, '#ff4500']],
-                            width: 2,
+                            width: 1,
                             shadowColor: '#fff', //默认透明
                             shadowBlur: 10
                         }
                     },
                     axisTick: {            // 坐标轴小标记
-                        length: 12,        // 属性length控制线长
+                        length: 10,        // 属性length控制线长
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: 'auto',
                             shadowColor: '#fff', //默认透明
@@ -257,14 +262,14 @@ export default class OnLineList extends Component {
                     splitLine: {           // 分隔线
                         length: 15,         // 属性length控制线长
                         lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                            width: 3,
+                            width: 1,
                             color: '#fff',
                             shadowColor: '#fff', //默认透明
                             shadowBlur: 10
                         }
                     },
                     pointer: {
-                        width: 2,
+                        width: 1,
                         shadowColor: '#fff', //默认透明
                         shadowBlur: 5
                     },
@@ -283,7 +288,10 @@ export default class OnLineList extends Component {
     render() {
         this.setOption()
         return (
-            <div id="echarts-div" style={{ width: 1000, height: 700 }}></div>
+            <div style={{ width: 500, height: 350 ,position: 'fixed',bottom: 0,right: 0 }}>
+                <div id="echarts-div" style={{width: '100%',height: '100%'}}></div>
+            </div>
+            
         )
     }
 }
