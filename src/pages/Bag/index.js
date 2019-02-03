@@ -16,8 +16,8 @@ export default class Bag extends Component {
     }
     _getList(arr) {
         this.setState({
-            // list: JSON.parse(arr),
-            list: arr,
+            list: JSON.parse(arr),
+            // list: arr,
         })
     }
     confirm() {
