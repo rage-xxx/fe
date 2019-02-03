@@ -6,6 +6,7 @@ export default class OnLineList extends Component {
         speed: 0,
         gas: 0,
         healthy: 0,
+        totalMileage: 0,
         echartsIns: null,
         bg: '#1b1b1b'
     }
@@ -14,15 +15,16 @@ export default class OnLineList extends Component {
         const myChart = echarts.init(document.getElementById('echarts-div'))
         this.setState({
             echartsIns: myChart
-        },() => {
+        }, () => {
             this.setOption()
         })
     }
-    _getAllState(speed = 0,gas = 0,healthy = 0) {
+    _getAllState(speed = 0, gas = 0, healthy = 0, totalMileage = 0) {
         this.setState({
             speed: +speed,
             gas: +gas,
-            healthy: +healthy
+            healthy: +healthy,
+            totalMileage: +totalMileage
         })
     }
     _getSpeed(text) {
@@ -33,6 +35,11 @@ export default class OnLineList extends Component {
     _getGas(text) {
         this.setState({
             gas: +text
+        })
+    }
+    _getTotalMileage(text) {
+        this.setState({
+            totalMileage: +text
         })
     }
     _getBg(text) {
@@ -46,10 +53,18 @@ export default class OnLineList extends Component {
         })
     }
     setOption() {
-        const { speed, gas, healthy, echartsIns, bg = 'transparent' } = this.state
-        if(!echartsIns) {return}
+        const { speed, gas, healthy, echartsIns, bg = 'transparent', totalMileage } = this.state
+        if (!echartsIns) { return }
         const option = {
             backgroundColor: bg,
+            title: {
+                left: 'center',
+                bottom: '54%',
+                textStyle: {
+                    color: '#ffffff'
+                },
+                text: `总里程：${totalMileage}KM`,
+            },
             tooltip: {
                 formatter: "{a} <br/>{c} {b}"
             },
@@ -61,7 +76,7 @@ export default class OnLineList extends Component {
                     name: '速度',
                     type: 'gauge',
                     min: 0,
-                    max: 400,
+                    max: 320,
                     splitNumber: 10,
                     radius: '50%',
                     axisLine: {            // 坐标轴线

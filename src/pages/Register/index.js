@@ -17,7 +17,7 @@ export default class OnLineList extends Component {
         const { password, password2 } = this.state
         return (
             <div>
-                <Input value={password} onChange={(e) => this.setState({ password: e.target.value })}  type="password"></Input>
+                <Input value={password} autoFocus="autofocus" onChange={(e) => this.setState({ password: e.target.value })}  type="password"></Input>
                 <Input value={password2} onChange={(e) => this.setState({ password2: e.target.value })}  type="password"></Input>
                 <Button onClick={this.handleClick}>登录</Button>
             </div>

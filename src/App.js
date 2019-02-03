@@ -15,11 +15,12 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'bag',
+        currView: 'login',
         menus: [],
         hideMenuList: ['onLineList','login','register','gauge','bag'],
         isFirstGuide: false,
-        currMenu: ''
+        currMenu: '',
+        hideClose: ['login','register','gauge']
     }
 
     componentDidMount() {
@@ -133,23 +134,34 @@ class App extends Component {
         return show && !hideMenuList.includes(currView)
     }
     render() {
-        const { collapsed, show ,currView} = this.state
+        const { collapsed, show ,currView,hideClose} = this.state
         const showLeft = this.isShowLeft()
         return (
             show ?
                 <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
-                    <div className="App" style={{ display: 'flex', border: '1px solid #ddd', height: '80vh', width: '80vw', background: currView === 'gauge' ? 'transparent' : 'white' }}>
+                    <div className="App" style={{ 
+                        display: 'flex', 
+                        border: currView === 'gauge' ? 'none' : '1px solid #ddd', 
+                        height: '80vh', 
+                        width: '80vw', 
+                        background: currView === 'gauge' ? 'transparent' : 'white' 
+                    }}>
 
                         {this.renderLeft()}
 
                         <div className="right" style={{ padding: 15, flex: 1 }}>
                             <div style={{position: 'relative'}}>
                                 {
-                                    showLeft ? <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+                                    showLeft ? 
+                                    <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
                                         <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
-                                    </Button> : null
+                                    </Button> : 
+                                    null
                                 }
-                                <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={this.handleClose} />
+                                {
+                                    hideClose.includes(currView) ? null :
+                                    <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={this.handleClose} />
+                                }
                             </div>
                             {this.renderRight()}
                         </div>

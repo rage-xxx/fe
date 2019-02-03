@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { InputNumber, Button, Popover,Modal } from 'antd'
+import { InputNumber, Button, Popover, Modal } from 'antd'
 
 export default class Bag extends Component {
     state = {
@@ -31,13 +31,13 @@ export default class Bag extends Component {
             payload
         }));
     }
-    onclick(btn, {name,max}) {
+    onclick(btn, { name, max }) {
         switch (btn) {
             case '使用':
-                this.setState({ currOper: 'UseItem', showModal: true, currItem: name ,currMax: max})
+                this.setState({ currOper: 'UseItem', showModal: true, currItem: name, currMax: max })
                 break;
             case '废弃':
-                this.setState({ currOper: 'DropItem', showModal: true, currItem: name ,currMax: max})
+                this.setState({ currOper: 'DropItem', showModal: true, currItem: name, currMax: max })
                 break;
             case '删除':
                 this.setState({ currOper: 'RemoveItem', payload: [name] }, () => { this.confirm() })
@@ -50,11 +50,11 @@ export default class Bag extends Component {
         })
     }
     handleOk = () => {
-        const {currNum,currItem} = this.state
+        const { currNum, currItem } = this.state
         this.setState({
-            payload: [currItem,currNum],
+            payload: [currItem, currNum],
             showModal: false
-        },() => {
+        }, () => {
             this.confirm()
         })
     }
@@ -64,11 +64,11 @@ export default class Bag extends Component {
         })
     }
     render() {
-        const { showModal, list ,currMax} = this.state
+        const { showModal, list, currMax } = this.state
 
         return (
             <div>
-                <ul style={{display: 'flex',flexDirection: 'column'}}>
+                <ul style={{ display: 'flex', flexDirection: 'column' }}>
                     {
                         list.map(v => (
                             <Popover content={(
@@ -76,7 +76,7 @@ export default class Bag extends Component {
                                     {['使用', '废弃', '删除'].map(b => <Button key={b} onClick={this.onclick.bind(this, b, v)}>{b}</Button>)}
                                 </div>
                             )} title="请选择操作" key={v} placement="right">
-                                <li style={{width: 200,border: '1px solid #ddd'}}>
+                                <li style={{ width: 200, border: '1px solid #ddd' }}>
                                     <img src={v.url} alt="" width="50" height="50" />
                                     {v.name}
                                 </li>

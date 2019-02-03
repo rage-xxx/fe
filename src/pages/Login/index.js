@@ -31,8 +31,8 @@ export default class OnLineList extends Component {
         const { password, title,logo } = this.state
         return (
             <div>
-                <div style={{display: 'flex'}}>
-                    <img src={logo} alt="" width="100" height="100" />
+                <div style={{display: 'flex',alignItems: 'flex-start'}}>
+                    <img src={logo || 'https://voice.ilegame.com.cn/gtav/img/logo1.png'} alt="" />
                     {
                         title ? <Alert
                             message={title}
@@ -41,7 +41,7 @@ export default class OnLineList extends Component {
                         /> : null
                     }
                 </div>
-                <Input value={password} onChange={(e) => this.setState({ password: e.target.value })} type="password" onKeyDown={e => e.keyCode === 13 && this.handleClick()}></Input>
+                <Input value={password} autoFocus onChange={(e) => this.setState({ password: e.target.value })} type="password" onKeyDown={e => e.keyCode === 13 && this.handleClick()}></Input>
                 <Button onClick={this.handleClick}>登录</Button>
             </div>
         )
