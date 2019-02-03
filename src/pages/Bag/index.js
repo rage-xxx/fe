@@ -16,8 +16,8 @@ export default class Bag extends Component {
     }
     _getList(arr) {
         this.setState({
-            list: JSON.parse(arr),
-            // list: arr,
+            // list: JSON.parse(arr),
+            list: arr,
         })
     }
     confirm() {
@@ -31,13 +31,13 @@ export default class Bag extends Component {
             payload
         }));
     }
-    onclick(btn, { name, max }) {
+    onclick(btn, { name, amount }) {
         switch (btn) {
             case '使用':
-                this.setState({ currOper: 'UseItem', showModal: true, currItem: name, currMax: max })
+                this.setState({ currOper: 'UseItem', showModal: true, currItem: name, currMax: amount })
                 break;
             case '废弃':
-                this.setState({ currOper: 'DropItem', showModal: true, currItem: name, currMax: max })
+                this.setState({ currOper: 'DropItem', showModal: true, currItem: name, currMax: amount })
                 break;
             case '删除':
                 this.setState({ currOper: 'RemoveItem', payload: [name] }, () => { this.confirm() })
@@ -77,8 +77,16 @@ export default class Bag extends Component {
                                 </div>
                             )} title="请选择操作" key={v} placement="right">
                                 <li style={{ width: 200, border: '1px solid #ddd' }}>
-                                    <img src={v.url} alt="" width="50" height="50" />
-                                    {v.name}
+                                    <img src={v.url} alt=""  />
+                                    <span>
+                                        {v.name}
+                                    </span>
+                                    <p>
+                                        {v.description}
+                                    </p>
+                                    <p>
+                                        {v.intro}
+                                    </p>
                                 </li>
                             </Popover>
                         ))
