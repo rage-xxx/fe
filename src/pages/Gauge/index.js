@@ -59,7 +59,8 @@ export default class OnLineList extends Component {
             backgroundColor: bg,
             title: {
                 left: 'center',
-                bottom: '54%',
+                bottom: '8%',
+                left: '54%',
                 textStyle: {
                     color: '#ffffff'
                 },
@@ -78,6 +79,7 @@ export default class OnLineList extends Component {
                     min: 0,
                     max: 320,
                     splitNumber: 10,
+                    center: ['60%', '70%'],
                     radius: '50%',
                     axisLine: {            // 坐标轴线
                         lineStyle: {       // 属性lineStyle控制线条样式
@@ -143,7 +145,7 @@ export default class OnLineList extends Component {
                 {
                     name: '损坏程度',
                     type: 'gauge',
-                    center: ['25%', '55%'],    // 默认全局居中
+                    center: ['35%', '75%'],    // 默认全局居中
                     radius: '30%',
                     min: 0,
                     max: 100,
@@ -216,7 +218,7 @@ export default class OnLineList extends Component {
                 {
                     name: '油表',
                     type: 'gauge',
-                    center: ['75%', '50%'],    // 默认全局居中
+                    center: ['85%', '70%'],    // 默认全局居中
                     radius: '30%',
                     min: 0,
                     max: 2,
@@ -283,7 +285,9 @@ export default class OnLineList extends Component {
     render() {
         this.setOption()
         return (
-            <div id="echarts-div" style={{ width: 1000, height: 700 }}></div>
+            <div style={{width: 1000,height: 700,position: 'fixed',bottom: 0,right: 0}}>
+                <div id="echarts-div" style={{ width: '100%', height: '100%' }}></div>
+            </div>
         )
     }
 }
