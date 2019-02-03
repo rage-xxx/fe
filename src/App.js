@@ -15,10 +15,10 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: '',
+        currView: 'guide',
+        guideTimer: null,
         menus: [],
         hideMenuList: ['onLineList','login','register','gauge','bag'],
-        isFirstGuide: false,
         currMenu: '',
         hideClose: ['login','register','gauge']
     }
@@ -32,10 +32,10 @@ class App extends Component {
         });
     }
     renderRight() {
-        const { currView, currMenu,isFirstGuide } = this.state
+        const { currView, currMenu,guideTimer } = this.state
         const map = {
             onLineList: <OnLineList></OnLineList>,
-            guide: <Guide currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus} isFirstGuide={isFirstGuide} ></Guide>,
+            guide: <Guide timer={guideTimer} setTimer={this.setGuideTimer} currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus} ></Guide>,
             bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>,
             login: <Login></Login>,
             register: <Register></Register>,
@@ -47,6 +47,11 @@ class App extends Component {
     setMenus = (menus) => {
         this.setState({
             menus
+        })
+    }
+    setGuideTimer = (timer) => {
+        this.setState({
+            guideTimer: timer
         })
     }
     setCurrMenu = (currMenu) => {
@@ -95,7 +100,7 @@ class App extends Component {
         }) 
     }
     renderLeft() {
-        const { collapsed, menus } = this.state
+        const { collapsed, menus ,guideTimer} = this.state
         const showLeft = this.isShowLeft()
         return showLeft ?
             <div style={{ width: collapsed ? 80 : 256 }}>
@@ -108,7 +113,7 @@ class App extends Component {
                 >
                     {
                         menus.map((m, idx) => (
-                            <Menu.Item key={idx} label={m.label}>
+                            <Menu.Item key={idx} label={m.label} disabled={!!guideTimer}>
                                 {m.icon ? <Icon type={m.icon}></Icon> : null}
                                 <span>
                                     {m.label}

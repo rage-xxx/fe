@@ -72,20 +72,20 @@ export default class OnLineList extends Component {
             '存款': (
                 <div>
                     存款金额<Input value={saveMoney} onChange={(e) => this.setState({ saveMoney: e.target.value })} type="number"></Input>
-                    <Button onClick={this.handleOper.bind(this, 1)}>存款</Button>
+                    <Button disabled={saveMoney === ''} onClick={this.handleOper.bind(this, 1)}>存款</Button>
                 </div>
             ),
             '取款': (
                 <div>
                     取款金额<Input value={fetchMoney} onChange={(e) => this.setState({ fetchMoney: e.target.value })} type="number"></Input>
-                    <Button onClick={this.handleOper.bind(this, 2)}>取款</Button>
+                    <Button disabled={fetchMoney === ''} onClick={this.handleOper.bind(this, 2)}>取款</Button>
                 </div>
             ),
             '转账': (
                 <div>
                     收款人<Input value={transName} onChange={(e) =>  (/^[a-zA-Z]+$/.test(e.target.value) || e.target.value === '') && this.setState({ transName: e.target.value })}></Input>
                     转账金额<Input value={transMoney} onChange={(e) => this.setState({ transMoney: e.target.value })} type="number"></Input>
-                    <Button onClick={this.handleOper.bind(this, 3)}>转账</Button>
+                    <Button  disabled={transName === '' || transMoney === ''} onClick={this.handleOper.bind(this, 3)}>转账</Button>
                 </div>
             ),
             '交易记录': (

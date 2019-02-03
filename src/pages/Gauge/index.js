@@ -3,7 +3,7 @@ import echarts from 'echarts'
 
 export default class OnLineList extends Component {
     state = {
-        speed: 0,
+        speed: 20,
         gas: 0,
         healthy: 0,
         totalMileage: 0,
@@ -119,6 +119,7 @@ export default class OnLineList extends Component {
                         width: 4
                     },
                     title: {
+                        offsetCenter: [0, '-30%'], 
                         textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                             fontWeight: 'bolder',
                             fontSize: 14,
@@ -129,8 +130,8 @@ export default class OnLineList extends Component {
                         }
                     },
                     detail: {
-                        backgroundColor: 'rgba(30,144,255,0.8)',
-                        borderWidth: 1,
+                        // backgroundColor: 'rgba(30,144,255,0.8)',
+                        // borderWidth: 1,
                         borderColor: '#fff',
                         shadowColor: '#fff', //默认透明
                         shadowBlur: 5,
@@ -141,7 +142,7 @@ export default class OnLineList extends Component {
                             fontSize: 14
                         }
                     },
-                    data: [{ value: speed, name: 'km/h' }]
+                    data: [{ value: speed, name: speed + 'km/h' }]
                 },
                 {
                     name: '损坏程度',

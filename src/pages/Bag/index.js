@@ -53,14 +53,16 @@ export default class Bag extends Component {
         const { currNum, currItem } = this.state
         this.setState({
             payload: [currItem, currNum],
-            showModal: false
+            showModal: false,
+            currNum: 0
         }, () => {
             this.confirm()
         })
     }
     handleCancel = () => {
         this.setState({
-            showModal: false
+            showModal: false,
+            currNum: 0
         })
     }
     render() {
@@ -76,10 +78,10 @@ export default class Bag extends Component {
                                     {['使用', '废弃', '删除'].map(b => <Button key={b} onClick={this.onclick.bind(this, b, v)}>{b}</Button>)}
                                 </div>
                             )} title="请选择操作" key={v} placement="right">
-                                <li style={{ width: 200, border: '1px solid #ddd' }}>
+                                <li style={{ width: 200, border: '1px solid #ddd' }} key={v.id}>
                                     <img src={v.url} alt=""  />
                                     <span>
-                                        {v.name}
+                                        {v.name} (×{v.amount})
                                     </span>
                                     <p>
                                         {v.description}
@@ -97,6 +99,8 @@ export default class Bag extends Component {
                     zIndex={2000}
                     title="请选择数量"
                     visible={showModal}
+                    cancelText="取消"
+                    okText="确定"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
