@@ -47,12 +47,13 @@ export default class OnLineList extends Component {
             },1000))
         })
     }
-    _getGuideMenu(isFirst = true, arr = JSON.stringify(example)) {
-        console.log(arr)
+    _getGuideMenu(isFirst = 'true', arr = JSON.stringify(example)) {
+        
         const menus = []
         const guideMap = {}
         arr = JSON.parse(arr)
         isFirst = JSON.parse(isFirst)
+        console.log(isFirst,arr)
         arr.forEach(v => {
             menus.push({
                 label: v.type
@@ -68,12 +69,14 @@ export default class OnLineList extends Component {
         this.props.setCurrMenu(menus[0].label)
     }
     render() {
-        const { guideMap,percent} = this.state
+        const { guideMap,percent,isFirstGuide} = this.state
         const { currMenu } = this.props
         const content = guideMap[currMenu] || {}
         return (
             <div>
-                <Progress percent={percent} showInfo={false} />
+                {
+                    isFirstGuide ? <Progress percent={percent} showInfo={false} /> : null
+                }
                 <div style={{ display: 'flex', width: '100%' }}>
                     <img src={content.picture} alt="" width="50%" />
                     <div style={{ width: '50%', padding: '0 20px' }}>

@@ -20,7 +20,7 @@ class App extends Component {
         menus: [],
         hideMenuList: ['onLineList','login','register','gauge','bag'],
         currMenu: '',
-        hideClose: ['login','register','gauge']
+        hideCloseViews: ['login','register','gauge']
     }
 
     componentDidMount() {
@@ -139,8 +139,9 @@ class App extends Component {
         return show && !hideMenuList.includes(currView)
     }
     render() {
-        const { collapsed, show ,currView,hideClose} = this.state
+        const { collapsed, show ,currView,hideCloseViews,guideTimer} = this.state
         const showLeft = this.isShowLeft()
+        const hideClose = hideCloseViews.includes(currView) || guideTimer 
         return (
             show ?
                 <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
@@ -164,7 +165,7 @@ class App extends Component {
                                     null
                                 }
                                 {
-                                    hideClose.includes(currView) ? null :
+                                    hideClose ? null :
                                     <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={this.handleClose} />
                                 }
                             </div>
