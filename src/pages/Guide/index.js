@@ -5,13 +5,6 @@ const example = [{ "picture": "https://voice.ilegame.com.cn/gtav/image/1.png", "
 
 export default class OnLineList extends Component {
     state = {
-        dataSource: [],
-        columns: [
-            { title: 'ID', dataIndex: 'id', key: 'id' },
-            { title: '玩家名字', dataIndex: 'player', key: 'player' },
-            { title: '等级', dataIndex: 'level', key: 'level' },
-            { title: '延迟', dataIndex: 'ping', key: 'ping' },
-        ],
         guideMap: {},
         percent: 0,
         isFirstGuide: true,
@@ -19,7 +12,7 @@ export default class OnLineList extends Component {
     }
     componentDidMount() {
         window._react.guide = this
-        this._getGuideMenu()
+        // this._getGuideMenu()
     }
     componentWillUpdate(nextProps,state) {
         if(nextProps.currMenu !== this.props.currMenu) {
@@ -35,10 +28,14 @@ export default class OnLineList extends Component {
             this.props.setTimer(setInterval(() => {
                 if(this.state.percent >= 100) {
                     clearInterval(this.props.timer)
-                    this.setState({
-                        scanedGuides: [...this.state.scanedGuides,currMenu]
-                    })
                     this.props.setTimer(null)
+                    const scanedGuides = [...this.state.scanedGuides,currMenu]
+                    if(scanedGuides.length === this.state.menus.length) {
+                        this.props.setIsFirstGuide(false)
+                    }
+                    this.setState({
+                        scanedGuides
+                    })
                     return
                 }
                 this.setState({
@@ -47,7 +44,7 @@ export default class OnLineList extends Component {
             },1000))
         })
     }
-    _getGuideMenu(isFirst = 'true', arr = JSON.stringify(example)) {
+    _getGuideMenu(isFirst = 'false', arr = JSON.stringify(example)) {
         
         const menus = []
         const guideMap = {}
@@ -67,6 +64,7 @@ export default class OnLineList extends Component {
         })
         this.props.setMenus(menus)
         this.props.setCurrMenu(menus[0].label)
+        this.props.setIsFirstGuide(isFirst)
     }
     render() {
         const { guideMap,percent,isFirstGuide} = this.state

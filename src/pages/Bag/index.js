@@ -19,7 +19,7 @@ export default class Bag extends Component {
         window._react.bag = this
         this._getList()
     }
-    _getList(arr = JSON.stringify(example)) {
+    _getList(arr) {
         this.setState({
             list: JSON.parse(arr),
             // list: arr,
@@ -147,7 +147,7 @@ export default class Bag extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <InputNumber min={1} max={currMax} value={currNum} onChange={this.onChange} />
+                    <InputNumber min={1} max={currMax} autoFocus value={currNum} onChange={this.onChange} />
                 </Modal>
             </div>
         )

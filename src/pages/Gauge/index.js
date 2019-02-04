@@ -59,8 +59,8 @@ export default class OnLineList extends Component {
             backgroundColor: bg,
             title: {
                 left: 'center',
-                bottom: '8%',
-                left: '54%',
+                bottom: '12%',
+                left: '64%',
                 textStyle: {
                     color: '#ffffff'
                 },
@@ -78,9 +78,9 @@ export default class OnLineList extends Component {
                     type: 'gauge',
                     min: 0,
                     max: 320,
-                    splitNumber: 10,
-                    center: ['60%', '70%'],
-                    radius: '50%',
+                    splitNumber: 8,
+                    center: ['70%', '70%'],
+                    radius: '35%',
                     axisLine: {            // 坐标轴线
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: [[0.09, 'lime'], [0.82, '#1e90ff'], [1, '#ff4500']],
@@ -145,12 +145,12 @@ export default class OnLineList extends Component {
                 {
                     name: '损坏程度',
                     type: 'gauge',
-                    center: ['35%', '75%'],    // 默认全局居中
-                    radius: '30%',
+                    center: ['51%', '75%'],    // 默认全局居中
+                    radius: '25%',
                     min: 0,
                     max: 100,
                     endAngle: 45,
-                    splitNumber: 10,
+                    splitNumber: 5,
                     axisLine: {            // 坐标轴线
                         lineStyle: {       // 属性lineStyle控制线条样式
                             color: [[0.29, '#ff4500'], [0.86, '#1e90ff'], [1, 'lime']],
@@ -218,8 +218,8 @@ export default class OnLineList extends Component {
                 {
                     name: '油表',
                     type: 'gauge',
-                    center: ['85%', '70%'],    // 默认全局居中
-                    radius: '30%',
+                    center: ['88%', '70%'],    // 默认全局居中
+                    radius: '25%',
                     min: 0,
                     max: 2,
                     startAngle: 135,

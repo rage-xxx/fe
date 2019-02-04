@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Menu, Icon, Button,message } from 'antd';
+import { Menu, Icon, Button, message } from 'antd';
 import OnLineList from './pages/OnLineList/'
 import Guide from './pages/Guide/'
 import Bank from './pages/Bank/'
@@ -8,6 +8,8 @@ import Login from './pages/Login/'
 import Register from './pages/Register/'
 import Gauge from './pages/Gauge/'
 import Bag from './pages/Bag/'
+import StateBar from './pages/StateBar/'
+
 
 
 
@@ -15,12 +17,14 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'bank',
+        currView: 'login',
         guideTimer: null,
+        showStateBar: true,
+        isFirstGuide: true,
         menus: [],
-        hideMenuList: ['onLineList','login','register','gauge','bag'],
+        hideMenuList: ['onLineList', 'login', 'register', 'gauge', 'bag'],
         currMenu: '',
-        hideCloseViews: ['login','register','gauge']
+        hideCloseViews: ['login', 'register', 'gauge']
     }
 
     componentDidMount() {
@@ -32,10 +36,10 @@ class App extends Component {
         });
     }
     renderRight() {
-        const { currView, currMenu,guideTimer } = this.state
+        const { currView, currMenu, guideTimer } = this.state
         const map = {
             onLineList: <OnLineList></OnLineList>,
-            guide: <Guide timer={guideTimer} setTimer={this.setGuideTimer} currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus} ></Guide>,
+            guide: <Guide timer={guideTimer} setIsFirstGuide={this.setIsFirstGuide} setTimer={this.setGuideTimer} currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus} ></Guide>,
             bank: <Bank currMenu={currMenu} setCurrMenu={this.setCurrMenu} setMenus={this.setMenus}></Bank>,
             login: <Login></Login>,
             register: <Register></Register>,
@@ -54,9 +58,19 @@ class App extends Component {
             guideTimer: timer
         })
     }
+    setIsFirstGuide = (isFirstGuide) => {
+        this.setState({
+            isFirstGuide
+        })
+    }
     setCurrMenu = (currMenu) => {
         this.setState({
             currMenu
+        })
+    }
+    _showStateBar(show) {
+        this.setState({
+            showStateBar: JSON.parse(show)
         })
     }
     _showView(show) {
@@ -72,13 +86,13 @@ class App extends Component {
             currView
         })
     }
-    _msg(type,text) {
+    _msg(type, text) {
         const arr = text.split('****')
         message[type](
             <span>
                 {
-                    arr.map((v,idx) => {
-                        return v.includes('::') ? <strong key={idx} style={{color: v.split('::')[1]}}>{v.split('::')[0]}</strong> : v
+                    arr.map((v, idx) => {
+                        return v.includes('::') ? <strong key={idx} style={{ color: v.split('::')[1] }}>{v.split('::')[0]}</strong> : v
                     })
                 }
             </span>
@@ -89,18 +103,18 @@ class App extends Component {
 
         this.setState({
             currMenu
-        },() => {
-            if(this.state.currView === 'bank' && currMenu === '交易记录') {
-                if(!window.mp) {return}
+        }, () => {
+            if (this.state.currView === 'bank' && currMenu === '交易记录') {
+                if (!window.mp) { return }
                 window.mp.trigger('DataFromClient', JSON.stringify({
                     action: 'loadPlayerBankBalance',
                     payload: 'loadPlayerBankBalance'
                 }))
             }
-        }) 
+        })
     }
     renderLeft() {
-        const { collapsed, menus ,guideTimer} = this.state
+        const { collapsed, menus, guideTimer, currMenu } = this.state
         const showLeft = this.isShowLeft()
         return showLeft ?
             <div style={{ width: collapsed ? 80 : 256 }}>
@@ -109,12 +123,12 @@ class App extends Component {
                     mode="inline"
                     theme="light"
                     inlineCollapsed={collapsed}
-                    style={{height: '100%'}}
+                    style={{ height: '100%' }}
                     onClick={this.handleMenuClick.bind(this)}
                 >
                     {
                         menus.map((m, idx) => (
-                            <Menu.Item key={idx} label={m.label} disabled={!!guideTimer}>
+                            <Menu.Item key={idx} label={m.label} disabled={currMenu === 'guide' && !!guideTimer}>
                                 {m.icon ? <Icon type={m.icon}></Icon> : null}
                                 <span>
                                     {m.label}
@@ -127,8 +141,8 @@ class App extends Component {
             : null
     }
     handleClose = () => {
-        this.setState({show: false},() => {
-            if(!window.mp) {return}
+        this.setState({ show: false }, () => {
+            if (!window.mp) { return }
             window.mp.trigger("DataFromClient", JSON.stringify({
                 action: 'activeClosure',
                 payload: this.state.currView
@@ -140,41 +154,51 @@ class App extends Component {
         return show && !hideMenuList.includes(currView)
     }
     render() {
-        const { collapsed, show ,currView,hideCloseViews,guideTimer} = this.state
+        const { collapsed, show, currView, hideCloseViews, guideTimer, isFirstGuide,showStateBar } = this.state
         const showLeft = this.isShowLeft()
-        const hideClose = hideCloseViews.includes(currView) || guideTimer 
+        const hideClose = hideCloseViews.includes(currView) || (currView === 'guide' && isFirstGuide)
         return (
-            show ?
-                <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
-                    <div className="App" style={{ 
-                        display: 'flex', 
-                        border: currView === 'gauge' ? 'none' : '1px solid #ddd', 
-                        height: '80vh', 
-                        width: '80vw', 
-                        background: currView === 'gauge' ? 'transparent' : 'white' 
-                    }}>
+            <React.Fragment>
+                {
+                    show ?
+                        <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent' }}>
+                            <div className="App" style={{
+                                display: 'flex',
+                                border: currView === 'gauge' ? 'none' : '1px solid #ddd',
+                                height: '80vh',
+                                width: '80vw',
+                                background: currView === 'gauge' ? 'transparent' : 'white'
+                            }}>
 
-                        {this.renderLeft()}
+                                {this.renderLeft()}
 
-                        <div className="right" style={{ padding: 15, flex: 1,height: '100%' }}>
-                            <div style={{position: 'relative'}}>
-                                {
-                                    showLeft ? 
-                                    <Icon onClick={this.toggleCollapsed} style={{ marginBottom: 16 ,fontSize: 20}} type={collapsed ? 'menu-unfold' : 'menu-fold'} />
-                                    : 
-                                    null
-                                }
-                                {
-                                    hideClose ? null :
-                                    <Icon type="close" style={{position: 'absolute',right: 10,top: 5,fontSize: 20,cursor: 'pointer'}} onClick={this.handleClose} />
-                                }
+                                <div className="right" style={{ padding: 15, flex: 1, height: '100%' }}>
+                                    <div style={{ position: 'relative' }}>
+                                        {
+                                            showLeft ?
+                                                <Icon onClick={this.toggleCollapsed} style={{ marginBottom: 16, fontSize: 20 }} type={collapsed ? 'menu-unfold' : 'menu-fold'} />
+                                                :
+                                                null
+                                        }
+                                        {
+                                            hideClose ? null :
+                                                <Icon type="close" style={{ position: 'absolute', right: 10, top: 5, fontSize: 20, cursor: 'pointer' }} onClick={this.handleClose} />
+                                        }
+                                    </div>
+                                    {this.renderRight()}
+                                </div>
+
                             </div>
-                            {this.renderRight()}
                         </div>
+                        : null
+                }
+                {
+                    showStateBar ? 
+                    <StateBar></StateBar>
+                    : null
 
-                    </div>
-                </div>
-                : null
+                }
+            </React.Fragment>
         );
     }
 }
