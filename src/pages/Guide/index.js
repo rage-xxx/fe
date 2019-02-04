@@ -82,9 +82,9 @@ export default class OnLineList extends Component {
         console.log('STATE',isFirstGuide)
         return (
             <div>
-                {
-                    isFirstGuide ? <Progress percent={percent} showInfo={false} /> : null
-                }
+                
+                <Progress percent={isFirstGuide ? percent : 100} showInfo={false} /> 
+                
                 <div style={{ display: 'flex', width: '100%' }}>
                     <img src={content.picture} alt="" width="50%" />
                     <div style={{ width: '50%', padding: '0 20px' }}>
