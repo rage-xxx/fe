@@ -79,6 +79,7 @@ export default class OnLineList extends Component {
         const { guideMap,percent,isFirstGuide} = this.state
         const { currMenu } = this.props
         const content = guideMap[currMenu] || {}
+        console.log('STATE',isFirstGuide)
         return (
             <div>
                 {
