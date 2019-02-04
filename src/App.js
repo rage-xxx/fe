@@ -17,7 +17,7 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'login',
+        currView: 'guide',
         guideTimer: null,
         showStateBar: true,
         isFirstGuide: true,
@@ -114,7 +114,7 @@ class App extends Component {
         })
     }
     renderLeft() {
-        const { collapsed, menus, guideTimer, currMenu } = this.state
+        const { collapsed, menus, guideTimer, currView } = this.state
         const showLeft = this.isShowLeft()
         return showLeft ?
             <div style={{ width: collapsed ? 80 : 256 }}>
@@ -128,7 +128,7 @@ class App extends Component {
                 >
                     {
                         menus.map((m, idx) => (
-                            <Menu.Item key={idx} label={m.label} disabled={currMenu === 'guide' && !!guideTimer}>
+                            <Menu.Item key={idx} label={m.label} disabled={currView === 'guide' && !!guideTimer}>
                                 {m.icon ? <Icon type={m.icon}></Icon> : null}
                                 <span>
                                     {m.label}
@@ -182,7 +182,7 @@ class App extends Component {
                                         }
                                         {
                                             hideClose ? null :
-                                                <Icon type="close" style={{ position: 'absolute', right: 10, top: 5, fontSize: 20, cursor: 'pointer' }} onClick={this.handleClose} />
+                                                <Icon type="close" className="close-btn" style={{ position: 'absolute', right: 10, top: 5, fontSize: 20, cursor: 'pointer' }} onClick={this.handleClose} />
                                         }
                                     </div>
                                     {this.renderRight()}

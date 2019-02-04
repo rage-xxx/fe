@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Progress} from 'antd'
+import {Progress, notification} from 'antd'
 
 const example = [{ "picture": "https://voice.ilegame.com.cn/gtav/image/1.png", "type": "教程1", "explain": "我是说明文1号", "music": "https://voice.ilegame.com.cn/gtav/music/KidsUnited.mp3" }, { "picture": "https://voice.ilegame.com.cn/gtav/image/2.png", "type": "教程2", "explain": "我是说明文2号", "music": "https://voice.ilegame.com.cn/gtav/music/KidsUnited.mp3" }, { "picture": "https://voice.ilegame.com.cn/gtav/image/3.png", "type": "教程3", "explain": "我是说明文3号", "music": "https://voice.ilegame.com.cn/gtav/music/KidsUnited.mp3" }, { "picture": "https://voice.ilegame.com.cn/gtav/image/4.png", "type": "教程4", "explain": "我是说明文4号", "music": "https://voice.ilegame.com.cn/gtav/music/KidsUnited.mp3" }, { "picture": "https://voice.ilegame.com.cn/gtav/image/5.png", "type": "教程5", "explain": "我是说明文5号", "music": "https://voice.ilegame.com.cn/gtav/music/KidsUnited.mp3" }, { "picture": "https://voice.ilegame.com.cn/gtav/image/6.png", "type": "教程6", "explain": "我是说明文6号", "music": "https://voice.ilegame.com.cn/gtav/music/KidsUnited.mp3" }]
 
@@ -12,7 +12,7 @@ export default class OnLineList extends Component {
     }
     componentDidMount() {
         window._react.guide = this
-        // this._getGuideMenu()
+        this._getGuideMenu()
     }
     componentWillUpdate(nextProps,state) {
         if(nextProps.currMenu !== this.props.currMenu) {
@@ -32,6 +32,15 @@ export default class OnLineList extends Component {
                     const scanedGuides = [...this.state.scanedGuides,currMenu]
                     if(scanedGuides.length === this.state.menus.length) {
                         this.props.setIsFirstGuide(false)
+                        notification.success({
+                            message: '提示',
+                            description: '请点击右上角关闭',
+                        });
+                    }else {
+                        notification.success({
+                            message: '提示',
+                            description: '请查看下个教程',
+                        });
                     }
                     this.setState({
                         scanedGuides
@@ -44,7 +53,7 @@ export default class OnLineList extends Component {
             },1000))
         })
     }
-    _getGuideMenu(isFirst = 'false', arr = JSON.stringify(example)) {
+    _getGuideMenu(isFirst = 'true', arr = JSON.stringify(example)) {
         
         const menus = []
         const guideMap = {}

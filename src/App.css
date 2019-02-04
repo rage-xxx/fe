@@ -1,1 +1,5 @@
 @import '~antd/dist/antd.css';
+
+.close-btn :hover{
+    color: #1890ff;
+}
