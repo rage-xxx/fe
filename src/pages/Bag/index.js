@@ -17,9 +17,10 @@ export default class Bag extends Component {
     }
     componentDidMount() {
         window._react.bag = this
-        this._getList()
+        // this._getList()
     }
     _getList(arr) {
+        console.log('bag list:' ,arr)
         this.setState({
             list: JSON.parse(arr),
             // list: arr,
