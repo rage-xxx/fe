@@ -16,6 +16,7 @@ export default class OnLineList extends Component {
     }
     componentWillUpdate(nextProps,state) {
         if(nextProps.currMenu !== this.props.currMenu) {
+            console.log('will update',nextProps,state)
             if(state.isFirstGuide && !state.scanedGuides.includes(nextProps.currMenu)) {
                 this.startCountDown(nextProps.currMenu)
             }
