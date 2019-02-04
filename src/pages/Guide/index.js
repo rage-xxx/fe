@@ -22,6 +22,7 @@ export default class OnLineList extends Component {
         }
     }
     startCountDown(currMenu) {
+        console.log('start count down')
         this.setState({
             percent: 0
         },() => {
@@ -79,7 +80,7 @@ export default class OnLineList extends Component {
         const { guideMap,percent,isFirstGuide} = this.state
         const { currMenu } = this.props
         const content = guideMap[currMenu] || {}
-        console.log('STATE',isFirstGuide)
+        console.log('STATE',isFirstGuide,percent)
         return (
             <div>
                 
