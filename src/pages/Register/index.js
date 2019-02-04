@@ -16,10 +16,12 @@ export default class OnLineList extends Component {
     render() {
         const { password, password2 } = this.state
         return (
-            <div>
-                <Input value={password} autoFocus="autofocus" onChange={(e) => this.setState({ password: e.target.value })}  type="password"></Input>
-                <Input value={password2} onChange={(e) => this.setState({ password2: e.target.value })}  type="password"></Input>
-                <Button onClick={this.handleClick}>登录</Button>
+            <div style={{display: 'flex',flexDirection: 'column',alignItems: 'center'}}>
+                <div style={{width: 200,marginTop: 200}}>
+                    <Input placeholder="请输入密码" value={password} autoFocus="autofocus" onChange={(e) => this.setState({ password: e.target.value })}  type="password"></Input>
+                    <Input placeholder="确认密码" style={{margin: '10px 0'}} value={password2} onChange={(e) => this.setState({ password2: e.target.value })}  type="password"></Input>
+                    <Button style={{width: '100%'}} type="primary" onClick={this.handleClick}>注册</Button>
+                </div>
             </div>
         )
     }

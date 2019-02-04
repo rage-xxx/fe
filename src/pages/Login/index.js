@@ -41,8 +41,12 @@ export default class OnLineList extends Component {
                         /> : null
                     }
                 </div>
-                <Input value={password} autoFocus onChange={(e) => this.setState({ password: e.target.value })} type="password" onKeyDown={e => e.keyCode === 13 && this.handleClick()}></Input>
-                <Button onClick={this.handleClick}>登录</Button>
+                <div style={{display: 'flex',flexDirection: 'column',alignItems: 'center'}}>
+                    <div style={{width: 200,marginTop: 150}}>
+                        <Input placeholder="请输入密码" value={password} autoFocus onChange={(e) => this.setState({ password: e.target.value })} type="password" onKeyDown={e => e.keyCode === 13 && this.handleClick()}></Input>
+                        <Button type="primary" style={{width: '100%',marginTop: 15}} onClick={this.handleClick}>登录</Button>
+                    </div>
+                </div>
             </div>
         )
     }

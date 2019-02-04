@@ -15,7 +15,7 @@ class App extends Component {
     state = {
         show: true,
         collapsed: false,
-        currView: 'gauge',
+        currView: 'bank',
         guideTimer: null,
         menus: [],
         hideMenuList: ['onLineList','login','register','gauge','bag'],
@@ -109,6 +109,7 @@ class App extends Component {
                     mode="inline"
                     theme="light"
                     inlineCollapsed={collapsed}
+                    style={{height: '100%'}}
                     onClick={this.handleMenuClick.bind(this)}
                 >
                     {
@@ -155,13 +156,12 @@ class App extends Component {
 
                         {this.renderLeft()}
 
-                        <div className="right" style={{ padding: 15, flex: 1 }}>
+                        <div className="right" style={{ padding: 15, flex: 1,height: '100%' }}>
                             <div style={{position: 'relative'}}>
                                 {
                                     showLeft ? 
-                                    <Button onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
-                                        <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
-                                    </Button> : 
+                                    <Icon onClick={this.toggleCollapsed} style={{ marginBottom: 16 ,fontSize: 20}} type={collapsed ? 'menu-unfold' : 'menu-fold'} />
+                                    : 
                                     null
                                 }
                                 {

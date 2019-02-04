@@ -1,20 +1,25 @@
 import React, { Component } from "react";
-import { InputNumber, Button, Popover, Modal } from 'antd'
+import { InputNumber, Button, Popover, Modal, Card ,Icon} from 'antd'
 
+const { Meta } = Card;
+
+// const example = [, { id: 5002, hash: "3602873787", description: "三明治", type: 0, amount: 10, intro: "使用后缓解饥饿", url: "https://voice.ilegame.com.cn/gtav/img/inventory/3602873787.png", name: "三明治" }]
+const example = new Array(15).fill({ id: 2895, hash: "1020618269", description: "可乐", type: 0, amount: 11, intro: "使用后缓解口渴", url: "https://voice.ilegame.com.cn/gtav/img/inventory/1020618269.png", name: "可乐" })
 export default class Bag extends Component {
     state = {
         payload: '',
         currOper: '',
         currItem: '',
         currMax: 0,
-        currNum: 0,
+        currNum: 1,
         showModal: false,
         list: []
     }
     componentDidMount() {
         window._react.bag = this
+        this._getList()
     }
-    _getList(arr) {
+    _getList(arr = JSON.stringify(example)) {
         this.setState({
             list: JSON.parse(arr),
             // list: arr,
@@ -36,7 +41,7 @@ export default class Bag extends Component {
             case '使用':
                 this.setState({ currOper: 'UseItem', showModal: true, currItem: name, currMax: amount })
                 break;
-            case '废弃':
+            case '丢弃':
                 this.setState({ currOper: 'DropItem', showModal: true, currItem: name, currMax: amount })
                 break;
             case '删除':
@@ -66,34 +71,71 @@ export default class Bag extends Component {
         })
     }
     render() {
-        const { showModal, list, currMax } = this.state
+        const { showModal, list, currMax, currNum } = this.state
 
         return (
-            <div>
-                <ul style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{height: '100%',paddingTop: 40}}>
+                {/* <ul style={{ display: 'flex' }}>
                     {
                         list.map(v => (
-                            <Popover content={(
-                                <div>
-                                    {['使用', '废弃', '删除'].map(b => <Button key={b} onClick={this.onclick.bind(this, b, v)}>{b}</Button>)}
-                                </div>
-                            )} title="请选择操作" key={v} placement="right">
-                                <li style={{ width: 200, border: '1px solid #ddd' }} key={v.id}>
-                                    <img src={v.url} alt=""  />
-                                    <span>
-                                        {v.name} (×{v.amount})
+                            <li key={v.id} style={{width: '50%'}}>
+                                <Popover
+                                    content={(
+                                        <div>
+                                            {
+                                                [{ label: '使用', type: 'primary' }, { label: '丢弃', type: '' }, { label: '删除', type: 'danger' }].map(b =>
+                                                    <Button key={b.label} style={{ marginRight: 15 }} size="small" type={b.type} onClick={this.onclick.bind(this, b.label, v)}>
+                                                        {b.label}
+                                                    </Button>
+                                                )
+                                            }
+                                        </div>
+                                    )}
+                                    title="请选择操作"
+                                    
+                                    placement="right"
+                                >
+                                    <div style={{ width: 200, border: '1px solid #ddd', background: 'rgba(0,0,0,0.8)', color: '#fff' }} >
+                                        <img src={v.url} alt="" />
+                                        <span>
+                                            {v.name} (×{v.amount})
                                     </span>
-                                    <p>
-                                        {v.description}
-                                    </p>
-                                    <p>
-                                        {v.intro}
-                                    </p>
-                                </li>
-                            </Popover>
+                                        <p>
+                                            {v.intro}
+                                        </p>
+                                    </div>
+                                </Popover>
+                            </li>
                         ))
                     }
-                </ul>
+                </ul> */}
+                <div style={{display: 'flex',flexWrap: 'wrap',overflow: 'auto',height: '100%' }}>
+                    {
+                        list.map(v => (
+                            <Card
+                                key={v.id}
+                                style={{ width: 200,margin: 15}}
+                                cover={
+                                    <div style={{height: 150,background: 'rgba(0,0,0,0.8)',display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+                                        <img alt="example" src={v.url} style={{width: '50%'}} />
+                                    </div>
+                                }
+                                actions={
+                                    [{ label: '使用', type: 'primary' }, { label: '丢弃', type: '' }, { label: '删除', type: 'danger' }].map(b =>
+                                        <span key={b.label}  size="small" type={b.type} onClick={this.onclick.bind(this, b.label, v)}>
+                                            {b.label}
+                                        </span>
+                                    )
+                                }
+                            >
+                                <Meta
+                                    title={ `${v.name}(×${v.amount})` }
+                                    description={v.intro}
+                                />
+                            </Card>
+                        ))
+                    }
+                </div>
 
                 <Modal
                     zIndex={2000}
@@ -101,10 +143,11 @@ export default class Bag extends Component {
                     visible={showModal}
                     cancelText="取消"
                     okText="确定"
+                    width="300px"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <InputNumber min={1} max={currMax} defaultValue={1} onChange={this.onChange} />
+                    <InputNumber min={1} max={currMax} value={currNum} onChange={this.onChange} />
                 </Modal>
             </div>
         )
